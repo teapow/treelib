@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>treelib package &#8212; treelib 1.5.4 documentation</title>
+    <title>API &#8212; treelib 1.5.4 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -32,73 +32,14 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="treelib-package">
-<h1>treelib package<a class="headerlink" href="#treelib-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-treelib.exceptions">
-<span id="treelib-exceptions-module"></span><h2>treelib.exceptions module<a class="headerlink" href="#module-treelib.exceptions" title="Permalink to this headline">¶</a></h2>
-<dl class="exception">
-<dt id="treelib.exceptions.DuplicatedNodeIdError">
-<em class="property">exception </em><code class="descclassname">treelib.exceptions.</code><code class="descname">DuplicatedNodeIdError</code><a class="reference internal" href="_modules/treelib/exceptions.html#DuplicatedNodeIdError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.exceptions.DuplicatedNodeIdError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
-<p>Exception throwed if an identifier already exists in a tree.</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="treelib.exceptions.InvalidLevelNumber">
-<em class="property">exception </em><code class="descclassname">treelib.exceptions.</code><code class="descname">InvalidLevelNumber</code><a class="reference internal" href="_modules/treelib/exceptions.html#InvalidLevelNumber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.exceptions.InvalidLevelNumber" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="treelib.exceptions.LinkPastRootNodeError">
-<em class="property">exception </em><code class="descclassname">treelib.exceptions.</code><code class="descname">LinkPastRootNodeError</code><a class="reference internal" href="_modules/treelib/exceptions.html#LinkPastRootNodeError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.exceptions.LinkPastRootNodeError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
-<p>Exception throwed in Tree.link_past_node() if one attempts
-to “link past” the root node of a tree.</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="treelib.exceptions.LoopError">
-<em class="property">exception </em><code class="descclassname">treelib.exceptions.</code><code class="descname">LoopError</code><a class="reference internal" href="_modules/treelib/exceptions.html#LoopError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.exceptions.LoopError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
-<p>Exception thrown if trying to move node B to node A’s position
-while A is B’s ancestor.</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="treelib.exceptions.MultipleRootError">
-<em class="property">exception </em><code class="descclassname">treelib.exceptions.</code><code class="descname">MultipleRootError</code><a class="reference internal" href="_modules/treelib/exceptions.html#MultipleRootError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.exceptions.MultipleRootError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
-<p>Exception throwed if more than one root exists in a tree.</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="treelib.exceptions.NodeIDAbsentError">
-<em class="property">exception </em><code class="descclassname">treelib.exceptions.</code><code class="descname">NodeIDAbsentError</code><a class="reference internal" href="_modules/treelib/exceptions.html#NodeIDAbsentError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.exceptions.NodeIDAbsentError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#treelib.exceptions.NodePropertyError" title="treelib.exceptions.NodePropertyError"><code class="xref py py-class docutils literal notranslate"><span class="pre">treelib.exceptions.NodePropertyError</span></code></a></p>
-<p>Exception throwed if a node’s identifier is unknown</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="treelib.exceptions.NodePropertyAbsentError">
-<em class="property">exception </em><code class="descclassname">treelib.exceptions.</code><code class="descname">NodePropertyAbsentError</code><a class="reference internal" href="_modules/treelib/exceptions.html#NodePropertyAbsentError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.exceptions.NodePropertyAbsentError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#treelib.exceptions.NodePropertyError" title="treelib.exceptions.NodePropertyError"><code class="xref py py-class docutils literal notranslate"><span class="pre">treelib.exceptions.NodePropertyError</span></code></a></p>
-<p>Exception throwed if a node’s data property is not specified</p>
-</dd></dl>
-
-<dl class="exception">
-<dt id="treelib.exceptions.NodePropertyError">
-<em class="property">exception </em><code class="descclassname">treelib.exceptions.</code><code class="descname">NodePropertyError</code><a class="reference internal" href="_modules/treelib/exceptions.html#NodePropertyError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.exceptions.NodePropertyError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
-<p>Basic Node attribute error</p>
-</dd></dl>
-
+  <div class="section" id="api">
+<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-treelib">
+<span id="module-treelib"></span><h2>Module treelib<a class="headerlink" href="#module-treelib" title="Permalink to this headline">¶</a></h2>
+<p>treelib - Python 2/3 Tree Implementation</p>
 </div>
 <div class="section" id="module-treelib.node">
-<span id="treelib-node-module"></span><h2>treelib.node module<a class="headerlink" href="#module-treelib.node" title="Permalink to this headline">¶</a></h2>
+<span id="module-treelib-node"></span><h2>Module treelib.node<a class="headerlink" href="#module-treelib.node" title="Permalink to this headline">¶</a></h2>
 <p>Node structure in treelib.</p>
 <dl class="class">
 <dt id="treelib.node.Node">
@@ -193,19 +134,8 @@ Use <cite>data</cite> attribute to store node-specific data.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-treelib.plugins">
-<span id="treelib-plugins-module"></span><h2>treelib.plugins module<a class="headerlink" href="#module-treelib.plugins" title="Permalink to this headline">¶</a></h2>
-<p>This is a public location to maintain contributed
-utilities to extend the basic Tree class.</p>
-<dl class="function">
-<dt id="treelib.plugins.export_to_dot">
-<code class="descclassname">treelib.plugins.</code><code class="descname">export_to_dot</code><span class="sig-paren">(</span><em>tree</em>, <em>filename</em>, <em>shape=u'circle'</em>, <em>graph=u'digraph'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treelib/plugins.html#export_to_dot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.plugins.export_to_dot" title="Permalink to this definition">¶</a></dt>
-<dd><p>Exports the tree in the dot format of the graphviz software</p>
-</dd></dl>
-
-</div>
 <div class="section" id="module-treelib.tree">
-<span id="treelib-tree-module"></span><h2>treelib.tree module<a class="headerlink" href="#module-treelib.tree" title="Permalink to this headline">¶</a></h2>
+<span id="module-treelib-tree"></span><h2>Module treelib.tree<a class="headerlink" href="#module-treelib.tree" title="Permalink to this headline">¶</a></h2>
 <p>Tree structure in treelib.</p>
 <dl class="class">
 <dt id="treelib.tree.Tree">
@@ -383,7 +313,7 @@ with a -&gt; c</p>
 <dl class="attribute">
 <dt id="treelib.tree.Tree.node_class">
 <code class="descname">node_class</code><a class="headerlink" href="#treelib.tree.Tree.node_class" title="Permalink to this definition">¶</a></dt>
-<dd><p>alias of <a class="reference internal" href="#treelib.node.Node" title="treelib.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">treelib.node.Node</span></code></a></p>
+<dd><p>alias of <a class="reference internal" href="treelib.html#treelib.node.Node" title="treelib.node.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">treelib.node.Node</span></code></a></p>
 </dd></dl>
 
 <dl class="attribute">
@@ -550,10 +480,14 @@ returning text and apply this decorator to the class.</p>
 </dd></dl>
 
 </div>
-<div class="section" id="module-treelib">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-treelib" title="Permalink to this headline">¶</a></h2>
-<p>treelib - Python 2/3 Tree Implementation</p>
 </div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
 </div>
 
 
@@ -613,7 +547,7 @@ returning text and apply this decorator to the class.</p>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
-      <a href="_sources/treelib.rst.txt"
+      <a href="_sources/api.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 
