@@ -54,7 +54,12 @@
 <span class="c1"># See the License for the specific language governing permissions and</span>
 <span class="c1"># limitations under the License.</span>
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Tree structure in treelib.</span>
+<span class="sd">Tree structure in `treelib`.</span>
+
+<span class="sd">The :class:`Tree` object defines the tree-like structure based on :class:`Node` objects.</span>
+<span class="sd">A new tree can be created from scratch without any parameter or a shallow/deep copy of another tree.</span>
+<span class="sd">When deep=True, a deepcopy operation is performed on feeding tree parameter and more memory</span>
+<span class="sd">is required to create the tree.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
@@ -76,8 +81,7 @@
 
 <div class="viewcode-block" id="python_2_unicode_compatible"><a class="viewcode-back" href="../../treelib.html#treelib.tree.python_2_unicode_compatible">[docs]</a><span class="k">def</span> <span class="nf">python_2_unicode_compatible</span><span class="p">(</span><span class="n">klass</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    (slightly modified from :</span>
-<span class="sd">        http://django.readthedocs.org/en/latest/_modules/django/utils/encoding.html)</span>
+<span class="sd">    (slightly modified from: http://django.readthedocs.org/en/latest/_modules/django/utils/encoding.html)</span>
 
 <span class="sd">    A decorator that defines __unicode__ and __str__ methods under Python 2.</span>
 <span class="sd">    Under Python 3 it does nothing.</span>
@@ -122,7 +126,8 @@
         <span class="c1">#: dictionary, identifier: Node object</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span> <span class="o">=</span> <span class="p">{}</span>
 
-        <span class="c1">#: identifier of the root node</span>
+        <span class="c1">#: Get or set the identifier of the root. This attribute can be accessed and modified</span>
+        <span class="c1">#: with ``.`` and ``=`` operator respectively.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="kc">None</span>
 
         <span class="k">if</span> <span class="n">tree</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -166,6 +171,9 @@
 <span class="sd">        Print tree structure in hierarchy style.</span>
 
 <span class="sd">        For example:</span>
+
+<span class="sd">        .. code-block:: bash</span>
+
 <span class="sd">            Root</span>
 <span class="sd">            |___ C01</span>
 <span class="sd">            |    |___ C11</span>
@@ -276,8 +284,9 @@
 
 <div class="viewcode-block" id="Tree.add_node"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.add_node">[docs]</a>    <span class="k">def</span> <span class="nf">add_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Add a new node to tree.</span>
-<span class="sd">        The &#39;node&#39; parameter refers to an instance of Class::Node</span>
+<span class="sd">        Add a new node object to the tree and make the parent as the root by default.</span>
+
+<span class="sd">        The &#39;node&#39; parameter refers to an instance of Class::Node.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_class</span><span class="p">):</span>
             <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="s2">&quot;First parameter must be object of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node_class</span><span class="p">))</span>
@@ -307,7 +316,7 @@
 
 <div class="viewcode-block" id="Tree.all_nodes_itr"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.all_nodes_itr">[docs]</a>    <span class="k">def</span> <span class="nf">all_nodes_itr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Returns all nodes in an iterator</span>
+<span class="sd">        Returns all nodes in an iterator.</span>
 <span class="sd">        Added by William Rusnack</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span><span class="o">.</span><span class="n">values</span><span class="p">()</span></div>
@@ -324,14 +333,17 @@
         <span class="k">return</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">nid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span> <span class="k">else</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="Tree.create_node"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.create_node">[docs]</a>    <span class="k">def</span> <span class="nf">create_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Create a child node for given @parent node.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a child node for given @parent node. If ``identifier`` is absent,</span>
+<span class="sd">        a UUID will be generated automatically.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_class</span><span class="p">(</span><span class="n">tag</span><span class="o">=</span><span class="n">tag</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="n">identifier</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">parent</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">node</span></div>
 
 <div class="viewcode-block" id="Tree.depth"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.depth">[docs]</a>    <span class="k">def</span> <span class="nf">depth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Get the maximum level of this tree or the level of the given node</span>
+<span class="sd">        Get the maximum level of this tree or the level of the given node.</span>
 
 <span class="sd">        @param node Node instance or identifier</span>
 <span class="sd">        @return int</span>
@@ -360,8 +372,10 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Python generator to traverse the tree (or a subtree) with optional</span>
 <span class="sd">        node filtering and sorting.</span>
+
 <span class="sd">        Loosely based on an algorithm from &#39;Essential LISP&#39; by John R. Anderson,</span>
-<span class="sd">        Albert T. Corbett, and Brian J. Reiser, page 239-241</span>
+<span class="sd">        Albert T. Corbett, and Brian J. Reiser, page 239-241.</span>
+
 <span class="sd">        :param nid: Node identifier from which tree traversal will start.</span>
 <span class="sd">            If None tree root will be used</span>
 <span class="sd">        :param mode: Traversal mode, may be either DEPTH, WIDTH or ZIGZAG</span>
@@ -423,15 +437,22 @@
 
 <div class="viewcode-block" id="Tree.filter_nodes"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.filter_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">filter_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Filters all nodes by function</span>
-<span class="sd">        function is passed one node as an argument and that node is included if function returns true</span>
-<span class="sd">        returns a filter iterator of the node in python 3 or a list of the nodes in python 2</span>
-<span class="sd">        Added William Rusnack</span>
+<span class="sd">        Filters all nodes by function.</span>
+
+<span class="sd">        :param func: is passed one node as an argument and that node is included if function returns true,</span>
+<span class="sd">        :return: a filter iterator of the node in python 3 or a list of the nodes in python 2.</span>
+
+<span class="sd">        Added by William Rusnack.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">filter</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_nodes_itr</span><span class="p">())</span></div>
 
 <div class="viewcode-block" id="Tree.get_node"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.get_node">[docs]</a>    <span class="k">def</span> <span class="nf">get_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return the node with `nid`. None returned if `nid` does not exist.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the object of the node with ID of ``nid``.</span>
+
+<span class="sd">        An alternative way is using &#39;[]&#39; operation on the tree. But small difference exists between them:</span>
+<span class="sd">        ``get_node()`` will return None if ``nid`` is absent, whereas &#39;[]&#39; will raise ``KeyError``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">nid</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">nid</span><span class="p">):</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span><span class="p">[</span><span class="n">nid</span><span class="p">]</span></div>
@@ -453,7 +474,7 @@
         <span class="k">return</span> <span class="n">fpointer</span></div>
 
 <div class="viewcode-block" id="Tree.leaves"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.leaves">[docs]</a>    <span class="k">def</span> <span class="nf">leaves</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get leaves of the whole tree of a subtree.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Get leaves of the whole tree or a subtree.&quot;&quot;&quot;</span>
         <span class="n">leaves</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">nid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
@@ -480,8 +501,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete a node by linking past it.</span>
 
-<span class="sd">        For example, if we have a -&gt; b -&gt; c and delete node b, we are left</span>
-<span class="sd">        with a -&gt; c</span>
+<span class="sd">        For example, if we have `a -&gt; b -&gt; c` and delete node b, we are left</span>
+<span class="sd">        with `a -&gt; c`.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">nid</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">NodeIDAbsentError</span><span class="p">(</span><span class="s2">&quot;Node &#39;</span><span class="si">%s</span><span class="s2">&#39; is not in the tree&quot;</span> <span class="o">%</span> <span class="n">nid</span><span class="p">)</span>
@@ -501,8 +522,7 @@
 
 <div class="viewcode-block" id="Tree.move_node"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.move_node">[docs]</a>    <span class="k">def</span> <span class="nf">move_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Move a node indicated by @source parameter to be a child of</span>
-<span class="sd">        @destination.</span>
+<span class="sd">        Move node @source from its parent to another parent @destination.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">source</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">destination</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">NodeIDAbsentError</span>
@@ -515,6 +535,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">__update_bpointer</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.is_ancestor"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.is_ancestor">[docs]</a>    <span class="k">def</span> <span class="nf">is_ancestor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ancestor</span><span class="p">,</span> <span class="n">grandchild</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if the @ancestor the preceding nodes of @grandchild.</span>
+
+<span class="sd">        :param ancestor: the node identifier</span>
+<span class="sd">        :param grandchild: the node identifier</span>
+<span class="sd">        :return: True or False</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">parent</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">grandchild</span><span class="p">]</span><span class="o">.</span><span class="n">bpointer</span>
         <span class="n">child</span> <span class="o">=</span> <span class="n">grandchild</span>
         <span class="k">while</span> <span class="n">parent</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -527,11 +554,11 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return a dict form of nodes in a tree: {id: node_instance}&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Return a dict form of nodes in a tree: {id: node_instance}.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span>
 
 <div class="viewcode-block" id="Tree.parent"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.parent">[docs]</a>    <span class="k">def</span> <span class="nf">parent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Get parent node object of given id&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Get parent :class:`Node` object of given id.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">nid</span><span class="p">):</span>
             <span class="k">raise</span> <span class="n">NodeIDAbsentError</span><span class="p">(</span><span class="s2">&quot;Node &#39;</span><span class="si">%s</span><span class="s2">&#39; is not in the tree&quot;</span> <span class="o">%</span> <span class="n">nid</span><span class="p">)</span>
 
@@ -572,9 +599,13 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Use this function to get the identifiers allowing to go from the root</span>
 <span class="sd">        nodes to each leaf.</span>
-<span class="sd">        Return a list of list of identifiers, root being not omitted.</span>
 
-<span class="sd">        For example :</span>
+<span class="sd">        :return: a list of list of identifiers, root being not omitted.</span>
+
+<span class="sd">        For example:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
 <span class="sd">            Harry</span>
 <span class="sd">            |___ Bill</span>
 <span class="sd">            |___ Jane</span>
@@ -584,11 +615,15 @@
 <span class="sd">            |         |___ Mary</span>
 <span class="sd">            |    |___ Mark</span>
 
-<span class="sd">        expected result :</span>
-<span class="sd">        [[&#39;harry&#39;, &#39;jane&#39;, &#39;diane&#39;, &#39;mary&#39;],</span>
-<span class="sd">         [&#39;harry&#39;, &#39;jane&#39;, &#39;mark&#39;],</span>
-<span class="sd">         [&#39;harry&#39;, &#39;jane&#39;, &#39;diane&#39;, &#39;george&#39;, &#39;jill&#39;],</span>
-<span class="sd">         [&#39;harry&#39;, &#39;bill&#39;]]</span>
+<span class="sd">        Expected result:</span>
+
+<span class="sd">        .. code-block:: python</span>
+
+<span class="sd">            [[&#39;harry&#39;, &#39;jane&#39;, &#39;diane&#39;, &#39;mary&#39;],</span>
+<span class="sd">             [&#39;harry&#39;, &#39;jane&#39;, &#39;mark&#39;],</span>
+<span class="sd">             [&#39;harry&#39;, &#39;jane&#39;, &#39;diane&#39;, &#39;george&#39;, &#39;jill&#39;],</span>
+<span class="sd">             [&#39;harry&#39;, &#39;bill&#39;]]</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -628,20 +663,23 @@
 
 <div class="viewcode-block" id="Tree.remove_subtree"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.remove_subtree">[docs]</a>    <span class="k">def</span> <span class="nf">remove_subtree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Return a subtree deleted from this tree. If nid is None, an</span>
+<span class="sd">        Get a subtree with ``nid`` being the root. If nid is None, an</span>
 <span class="sd">        empty tree is returned.</span>
+
 <span class="sd">        For the original tree, this method is similar to</span>
 <span class="sd">        `remove_node(self,nid)`, because given node and its children</span>
 <span class="sd">        are removed from the original tree in both methods.</span>
 <span class="sd">        For the returned value and performance, these two methods are</span>
 <span class="sd">        different:</span>
 
-<span class="sd">            `remove_node` returns the number of deleted nodes;</span>
-<span class="sd">            `remove_subtree` returns a subtree of deleted nodes;</span>
+<span class="sd">            * `remove_node` returns the number of deleted nodes;</span>
+<span class="sd">            * `remove_subtree` returns a subtree of deleted nodes;</span>
 
 <span class="sd">        You are always suggested to use `remove_node` if your only to</span>
 <span class="sd">        delete nodes from a tree, as the other one need memory</span>
 <span class="sd">        allocation to store the new tree.</span>
+
+<span class="sd">        :return: a :class:`Tree` object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">st</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">nid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -666,6 +704,8 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Traverse the tree branch along the branch from nid to its</span>
 <span class="sd">        ancestors (until root).</span>
+
+<span class="sd">        :param filter: the function of one variable to act on the :class:`Node` object.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">nid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
@@ -684,7 +724,9 @@
 
 <div class="viewcode-block" id="Tree.save2file"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.save2file">[docs]</a>    <span class="k">def</span> <span class="nf">save2file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">nid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">ROOT</span><span class="p">,</span> <span class="n">idhidden</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                   <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">line_type</span><span class="o">=</span><span class="s1">&#39;ascii-ex&#39;</span><span class="p">,</span> <span class="n">data_property</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Update 20/05/13: Save tree into file for offline analysis&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save the tree into file for offline analysis.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="k">def</span> <span class="nf">_write_line</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span> <span class="o">+</span> <span class="sa">b</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
@@ -696,6 +738,28 @@
 
 <div class="viewcode-block" id="Tree.show"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">ROOT</span><span class="p">,</span> <span class="n">idhidden</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
              <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">line_type</span><span class="o">=</span><span class="s1">&#39;ascii-ex&#39;</span><span class="p">,</span> <span class="n">data_property</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print the tree structure in hierarchy style.</span>
+
+<span class="sd">        You have three ways to output your tree data, i.e., stdout with ``show()``,</span>
+<span class="sd">        plain text file with ``save2file()``, and json string with ``to_json()``. The</span>
+<span class="sd">        former two use the same backend to generate a string of tree structure in a</span>
+<span class="sd">        text graph.</span>
+
+<span class="sd">        * Version &gt;= 1.2.7a*: you can also specify the ``line_type`` parameter, such as &#39;ascii&#39; (default), &#39;ascii-ex&#39;, &#39;ascii-exr&#39;, &#39;ascii-em&#39;, &#39;ascii-emv&#39;, &#39;ascii-emh&#39;) to the change graphical form.</span>
+
+<span class="sd">        :param nid: the reference node to start expanding.</span>
+<span class="sd">        :param level: the node level in the tree (root as level 0).</span>
+<span class="sd">        :param idhidden: whether hiding the node ID when printing.</span>
+<span class="sd">        :param filter: the function of one variable to act on the :class:`Node` object.</span>
+<span class="sd">            When this parameter is specified, the traversing will not continue to following</span>
+<span class="sd">            children of node whose condition does not pass the filter.</span>
+<span class="sd">        :param key: the ``key`` param for sorting :class:`Node` objects in the same level.</span>
+<span class="sd">        :param reverse: the ``reverse`` param for sorting :class:`Node` objects in the same level.</span>
+<span class="sd">        :param line_type:</span>
+<span class="sd">        :param data_property: the property on the node data object to be printed.</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_reader</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
         <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
@@ -748,9 +812,10 @@
 <span class="sd">        Return a shallow COPY of subtree with nid being the new root.</span>
 <span class="sd">        If nid is None, return an empty tree.</span>
 <span class="sd">        If you are looking for a deepcopy, please create a new tree</span>
-<span class="sd">        with this shallow copy,</span>
+<span class="sd">        with this shallow copy, e.g.,</span>
 
-<span class="sd">        e.g.</span>
+<span class="sd">        .. code-block:: python</span>
+
 <span class="sd">            new_tree = Tree(t.subtree(t.root), deep=True)</span>
 
 <span class="sd">        This line creates a deep copy of the entire tree.</span>
@@ -768,7 +833,7 @@
         <span class="k">return</span> <span class="n">st</span></div>
 
 <div class="viewcode-block" id="Tree.to_dict"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">with_data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;transform self into a dict&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Transform the whole tree into a dict.&quot;&quot;&quot;</span>
 
         <span class="n">nid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="k">if</span> <span class="p">(</span><span class="n">nid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="k">else</span> <span class="n">nid</span>
         <span class="n">ntag</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">nid</span><span class="p">]</span><span class="o">.</span><span class="n">tag</span>
@@ -791,12 +856,13 @@
             <span class="k">return</span> <span class="n">tree_dict</span></div>
 
 <div class="viewcode-block" id="Tree.to_json"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.to_json">[docs]</a>    <span class="k">def</span> <span class="nf">to_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">with_data</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return the json string corresponding to self&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;To format the tree in JSON format.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">with_data</span><span class="o">=</span><span class="n">with_data</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Tree.update_node"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.update_node">[docs]</a>    <span class="k">def</span> <span class="nf">update_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="o">**</span><span class="n">attrs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Update node&#39;s attributes.</span>
+
 <span class="sd">        :param nid: the identifier of modified node</span>
 <span class="sd">        :param attrs: attribute pairs recognized by Node object</span>
 <span class="sd">        :return: None</span>

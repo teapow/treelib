@@ -54,6 +54,9 @@
 <span class="c1"># limitations under the License.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Node structure in treelib.</span>
+
+<span class="sd">A :class:`Node` object contains basic properties such as node identifier,</span>
+<span class="sd">node tag, parent node, children nodes etc., and some operations for a node.</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">uuid</span>
 
@@ -62,11 +65,11 @@
 
 <div class="viewcode-block" id="Node"><a class="viewcode-back" href="../../treelib.html#treelib.node.Node">[docs]</a><span class="k">class</span> <span class="nc">Node</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Nodes are elementary objects which are stored a `_nodes` dictionary of a Tree.</span>
+<span class="sd">    Nodes are elementary objects that are stored in the `_nodes` dictionary of a Tree.</span>
 <span class="sd">    Use `data` attribute to store node-specific data.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="c1">#: ADD, DELETE, INSERT constants :</span>
+    <span class="c1">#: Mode constants for routine `update_fpointer()`.</span>
     <span class="p">(</span><span class="n">ADD</span><span class="p">,</span> <span class="n">DELETE</span><span class="p">,</span> <span class="n">INSERT</span><span class="p">,</span> <span class="n">REPLACE</span><span class="p">)</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">expanded</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -91,7 +94,7 @@
         <span class="c1">#: identifier(s) of the soons&#39; node(s) :</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_fpointer</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 
-        <span class="c1">#: None or whatever given as a parameter</span>
+        <span class="c1">#: User payload associated with this node.</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
 
     <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
@@ -106,7 +109,10 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">bpointer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return the value of `_bpointer`.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The parent ID of a node. This attribute can be</span>
+<span class="sd">        accessed and modified with ``.`` and ``=`` operator respectively.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bpointer</span>
 
     <span class="nd">@bpointer</span><span class="o">.</span><span class="n">setter</span>
@@ -121,7 +127,12 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">fpointer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return the value of `_fpointer`.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        With a getting operator, a list of IDs of node&#39;s children is obtained. With</span>
+<span class="sd">        a setting operator, the value can be list, set, or dict. For list or set,</span>
+<span class="sd">        it is converted to a list type by the package; for dict, the keys are</span>
+<span class="sd">        treated as the node IDs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fpointer</span>
 
     <span class="nd">@fpointer</span><span class="o">.</span><span class="n">setter</span>
@@ -140,7 +151,10 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return the value of `_identifier`.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The unique ID of a node within the scope of a tree. This attribute can be</span>
+<span class="sd">        accessed and modified with ``.`` and ``=`` operator respectively.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span>
 
     <span class="nd">@identifier</span><span class="o">.</span><span class="n">setter</span>
@@ -164,7 +178,10 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">tag</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return the value of `_tag`.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The readable node name for human. This attribute can be accessed and</span>
+<span class="sd">        modified with ``.`` and ``=`` operator respectively.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tag</span>
 
     <span class="nd">@tag</span><span class="o">.</span><span class="n">setter</span>
@@ -173,11 +190,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_tag</span> <span class="o">=</span> <span class="n">value</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
 
 <div class="viewcode-block" id="Node.update_bpointer"><a class="viewcode-back" href="../../treelib.html#treelib.node.Node.update_bpointer">[docs]</a>    <span class="k">def</span> <span class="nf">update_bpointer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Update parent node.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;Set the parent (indicated by the ``nid`` parameter) of a node.&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">bpointer</span> <span class="o">=</span> <span class="n">nid</span></div>
 
 <div class="viewcode-block" id="Node.update_fpointer"><a class="viewcode-back" href="../../treelib.html#treelib.node.Node.update_fpointer">[docs]</a>    <span class="k">def</span> <span class="nf">update_fpointer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">ADD</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Update all children nodes.&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update the children list with different modes: addition (Node.ADD or</span>
+<span class="sd">        Node.INSERT) and deletion (Node.DELETE).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">nid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
 
