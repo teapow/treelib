@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>treelib.tree &#8212; treelib 1.5.4 documentation</title>
+    <title>treelib.tree &#8212; treelib 1.5.5 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -64,14 +64,15 @@
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
 
+<span class="kn">import</span> <span class="nn">codecs</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">StringIO</span> <span class="k">import</span> <span class="n">StringIO</span> <span class="k">as</span> <span class="n">BytesIO</span>
+    <span class="kn">from</span> <span class="nn">StringIO</span> <span class="k">import</span> <span class="n">StringIO</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">BytesIO</span>
+    <span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">StringIO</span>
 
 <span class="kn">from</span> <span class="nn">.exceptions</span> <span class="k">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">.node</span> <span class="k">import</span> <span class="n">Node</span>
@@ -250,7 +251,7 @@
             <span class="k">yield</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">node</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">leading</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">dt_vline</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="mi">3</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span> <span class="k">else</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">is_last</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+                                  <span class="k">if</span> <span class="ow">not</span> <span class="n">x</span> <span class="k">else</span> <span class="s1">&#39; &#39;</span> <span class="o">*</span> <span class="mi">4</span><span class="p">,</span> <span class="n">is_last</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
             <span class="n">lasting</span> <span class="o">=</span> <span class="n">dt_line_cor</span> <span class="k">if</span> <span class="n">is_last</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">else</span> <span class="n">dt_line_box</span>
             <span class="k">yield</span> <span class="n">leading</span> <span class="o">+</span> <span class="n">lasting</span><span class="p">,</span> <span class="n">node</span>
 
@@ -289,13 +290,15 @@
 <span class="sd">        The &#39;node&#39; parameter refers to an instance of Class::Node.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_class</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="s2">&quot;First parameter must be object of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node_class</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span>
+                <span class="s2">&quot;First parameter must be object of </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">node_class</span><span class="p">))</span>
 
         <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">identifier</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">DuplicatedNodeIdError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t create node &quot;</span>
                                         <span class="s2">&quot;with ID &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="n">node</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span>
 
-        <span class="n">pid</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">identifier</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">parent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_class</span><span class="p">)</span> <span class="k">else</span> <span class="n">parent</span>
+        <span class="n">pid</span> <span class="o">=</span> <span class="n">parent</span><span class="o">.</span><span class="n">identifier</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">parent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">node_class</span><span class="p">)</span> <span class="k">else</span> <span class="n">parent</span>
 
         <span class="k">if</span> <span class="n">pid</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
@@ -433,7 +436,8 @@
                         <span class="n">stack</span> <span class="o">=</span> <span class="n">stack_fw</span> <span class="k">if</span> <span class="n">direction</span> <span class="k">else</span> <span class="n">stack_bw</span>
 
             <span class="k">else</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Traversal mode &#39;</span><span class="si">{}</span><span class="s2">&#39; is not supported&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mode</span><span class="p">))</span></div>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                    <span class="s2">&quot;Traversal mode &#39;</span><span class="si">{}</span><span class="s2">&#39; is not supported&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mode</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Tree.filter_nodes"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.filter_nodes">[docs]</a>    <span class="k">def</span> <span class="nf">filter_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -805,7 +809,8 @@
                 <span class="n">level</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
                 <span class="k">return</span> <span class="nb">len</span><span class="p">([</span><span class="n">node</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">all_nodes_itr</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">identifier</span><span class="p">)</span> <span class="o">==</span> <span class="n">level</span><span class="p">])</span>
             <span class="k">except</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;level should be an integer instead of &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">level</span><span class="p">))</span></div>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="s2">&quot;level should be an integer instead of &#39;</span><span class="si">%s</span><span class="s2">&#39;&quot;</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">level</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Tree.subtree"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.subtree">[docs]</a>    <span class="k">def</span> <span class="nf">subtree</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -831,6 +836,39 @@
         <span class="k">for</span> <span class="n">node_n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_tree</span><span class="p">(</span><span class="n">nid</span><span class="p">):</span>
             <span class="n">st</span><span class="o">.</span><span class="n">_nodes</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="bp">self</span><span class="p">[</span><span class="n">node_n</span><span class="p">]</span><span class="o">.</span><span class="n">identifier</span><span class="p">:</span> <span class="bp">self</span><span class="p">[</span><span class="n">node_n</span><span class="p">]})</span>
         <span class="k">return</span> <span class="n">st</span></div>
+
+<div class="viewcode-block" id="Tree.update_node"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.update_node">[docs]</a>    <span class="k">def</span> <span class="nf">update_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="o">**</span><span class="n">attrs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Update node&#39;s attributes.</span>
+
+<span class="sd">        :param nid: the identifier of modified node</span>
+<span class="sd">        :param attrs: attribute pairs recognized by Node object</span>
+<span class="sd">        :return: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cn</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">nid</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">attrs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">attr</span> <span class="o">==</span> <span class="s1">&#39;identifier&#39;</span><span class="p">:</span>
+                <span class="c1"># Updating node id meets following contraints:</span>
+                <span class="c1"># * Update node identifier property</span>
+                <span class="c1"># * Update parent&#39;s followers</span>
+                <span class="c1"># * Update children&#39;s parents</span>
+                <span class="c1"># * Update tree registration of var _nodes</span>
+                <span class="c1"># * Update tree root if necessary</span>
+                <span class="n">cn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">nid</span><span class="p">)</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">cn</span><span class="p">,</span> <span class="s1">&#39;identifier&#39;</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">=</span> <span class="n">cn</span>
+
+                <span class="k">if</span> <span class="n">cn</span><span class="o">.</span><span class="n">bpointer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="p">[</span><span class="n">cn</span><span class="o">.</span><span class="n">bpointer</span><span class="p">]</span><span class="o">.</span><span class="n">update_fpointer</span><span class="p">(</span>
+                        <span class="n">nid</span><span class="o">=</span><span class="n">nid</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="n">val</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node_class</span><span class="o">.</span><span class="n">REPLACE</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">fp</span> <span class="ow">in</span> <span class="n">cn</span><span class="o">.</span><span class="n">fpointer</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="p">[</span><span class="n">fp</span><span class="p">]</span><span class="o">.</span><span class="n">update_bpointer</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="n">val</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">==</span> <span class="n">nid</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">val</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">cn</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Tree.to_dict"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">with_data</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Transform the whole tree into a dict.&quot;&quot;&quot;</span>
@@ -859,37 +897,44 @@
         <span class="sd">&quot;&quot;&quot;To format the tree in JSON format.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">with_data</span><span class="o">=</span><span class="n">with_data</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="n">sort</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">reverse</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Tree.update_node"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.update_node">[docs]</a>    <span class="k">def</span> <span class="nf">update_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nid</span><span class="p">,</span> <span class="o">**</span><span class="n">attrs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Update node&#39;s attributes.</span>
+<div class="viewcode-block" id="Tree.to_graphviz"><a class="viewcode-back" href="../../treelib.html#treelib.tree.Tree.to_graphviz">[docs]</a>    <span class="k">def</span> <span class="nf">to_graphviz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="s1">&#39;circle&#39;</span><span class="p">,</span> <span class="n">graph</span><span class="o">=</span><span class="s1">&#39;digraph&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Exports the tree in the dot format of the graphviz software&quot;&quot;&quot;</span>
+        <span class="n">nodes</span><span class="p">,</span> <span class="n">connections</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">:</span>
 
-<span class="sd">        :param nid: the identifier of modified node</span>
-<span class="sd">        :param attrs: attribute pairs recognized by Node object</span>
-<span class="sd">        :return: None</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">cn</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">nid</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">attrs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">if</span> <span class="n">attr</span> <span class="o">==</span> <span class="s1">&#39;identifier&#39;</span><span class="p">:</span>
-                <span class="c1"># Updating node id meets following contraints:</span>
-                <span class="c1"># * Update node identifier property</span>
-                <span class="c1"># * Update parent&#39;s followers</span>
-                <span class="c1"># * Update children&#39;s parents</span>
-                <span class="c1"># * Update tree registration of var _nodes</span>
-                <span class="c1"># * Update tree root if necessary</span>
-                <span class="n">cn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">nid</span><span class="p">)</span>
-                <span class="nb">setattr</span><span class="p">(</span><span class="n">cn</span><span class="p">,</span> <span class="s1">&#39;identifier&#39;</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">=</span> <span class="n">cn</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">expand_tree</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">WIDTH</span><span class="p">):</span>
+                <span class="n">nid</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">identifier</span>
+                <span class="n">state</span> <span class="o">=</span> <span class="s1">&#39;&quot;</span><span class="si">{0}</span><span class="s1">&quot; [label=&quot;</span><span class="si">{1}</span><span class="s1">&quot;, shape=</span><span class="si">{2}</span><span class="s1">]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">nid</span><span class="p">,</span> <span class="bp">self</span><span class="p">[</span><span class="n">n</span><span class="p">]</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+                <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
 
-                <span class="k">if</span> <span class="n">cn</span><span class="o">.</span><span class="n">bpointer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="p">[</span><span class="n">cn</span><span class="o">.</span><span class="n">bpointer</span><span class="p">]</span><span class="o">.</span><span class="n">update_fpointer</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="n">nid</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="n">val</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node_class</span><span class="o">.</span><span class="n">REPLACE</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">children</span><span class="p">(</span><span class="n">nid</span><span class="p">):</span>
+                    <span class="n">cid</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">identifier</span>
+                    <span class="n">connections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;&quot;</span><span class="si">{0}</span><span class="s1">&quot; -&gt; &quot;</span><span class="si">{1}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nid</span><span class="p">,</span> <span class="n">cid</span><span class="p">))</span>
 
-                <span class="k">for</span> <span class="n">fp</span> <span class="ow">in</span> <span class="n">cn</span><span class="o">.</span><span class="n">fpointer</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="p">[</span><span class="n">fp</span><span class="p">]</span><span class="o">.</span><span class="n">update_bpointer</span><span class="p">(</span><span class="n">nid</span><span class="o">=</span><span class="n">val</span><span class="p">)</span>
+        <span class="c1"># write nodes and connections to dot format</span>
+        <span class="n">is_plain_file</span> <span class="o">=</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">is_plain_file</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">codecs</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
 
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">==</span> <span class="n">nid</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">root</span> <span class="o">=</span> <span class="n">val</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="nb">setattr</span><span class="p">(</span><span class="n">cn</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span></div></div>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">graph</span> <span class="o">+</span> <span class="s1">&#39; tree {</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">n</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">connections</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">connections</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;}&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">is_plain_file</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div></div>
 </pre></div>
 
           </div>

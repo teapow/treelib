@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>treelib package &#8212; treelib 1.5.4 documentation</title>
+    <title>treelib package &#8212; treelib 1.5.5 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -483,13 +483,13 @@ ancestors (until root).</p>
 
 <dl class="method">
 <dt id="treelib.tree.Tree.save2file">
-<code class="descname">save2file</code><span class="sig-paren">(</span><em>filename</em>, <em>nid=None</em>, <em>level=0</em>, <em>idhidden=True</em>, <em>filter=None</em>, <em>key=None</em>, <em>reverse=False</em>, <em>line_type=u'ascii-ex'</em>, <em>data_property=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treelib/tree.html#Tree.save2file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.tree.Tree.save2file" title="Permalink to this definition">¶</a></dt>
+<code class="descname">save2file</code><span class="sig-paren">(</span><em>filename</em>, <em>nid=None</em>, <em>level=0</em>, <em>idhidden=True</em>, <em>filter=None</em>, <em>key=None</em>, <em>reverse=False</em>, <em>line_type='ascii-ex'</em>, <em>data_property=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treelib/tree.html#Tree.save2file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.tree.Tree.save2file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the tree into file for offline analysis.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="treelib.tree.Tree.show">
-<code class="descname">show</code><span class="sig-paren">(</span><em>nid=None</em>, <em>level=0</em>, <em>idhidden=True</em>, <em>filter=None</em>, <em>key=None</em>, <em>reverse=False</em>, <em>line_type=u'ascii-ex'</em>, <em>data_property=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treelib/tree.html#Tree.show"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.tree.Tree.show" title="Permalink to this definition">¶</a></dt>
+<code class="descname">show</code><span class="sig-paren">(</span><em>nid=None</em>, <em>level=0</em>, <em>idhidden=True</em>, <em>filter=None</em>, <em>key=None</em>, <em>reverse=False</em>, <em>line_type='ascii-ex'</em>, <em>data_property=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treelib/tree.html#Tree.show"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.tree.Tree.show" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print the tree structure in hierarchy style.</p>
 <p>You have three ways to output your tree data, i.e., stdout with <code class="docutils literal notranslate"><span class="pre">show()</span></code>,
 plain text file with <code class="docutils literal notranslate"><span class="pre">save2file()</span></code>, and json string with <code class="docutils literal notranslate"><span class="pre">to_json()</span></code>. The
@@ -561,6 +561,12 @@ with this shallow copy, e.g.,</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="treelib.tree.Tree.to_graphviz">
+<code class="descname">to_graphviz</code><span class="sig-paren">(</span><em>filename=None</em>, <em>shape='circle'</em>, <em>graph='digraph'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treelib/tree.html#Tree.to_graphviz"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.tree.Tree.to_graphviz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports the tree in the dot format of the graphviz software</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="treelib.tree.Tree.to_json">
 <code class="descname">to_json</code><span class="sig-paren">(</span><em>with_data=False</em>, <em>sort=True</em>, <em>reverse=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treelib/tree.html#Tree.to_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.tree.Tree.to_json" title="Permalink to this definition">¶</a></dt>
 <dd><p>To format the tree in JSON format.</p>
@@ -604,9 +610,10 @@ returning text and apply this decorator to the class.</p>
 <span id="treelib-plugins-module"></span><h2>treelib.plugins module<a class="headerlink" href="#module-treelib.plugins" title="Permalink to this headline">¶</a></h2>
 <p>This is a public location to maintain contributed
 utilities to extend the basic Tree class.</p>
+<p>Deprecated! We prefer a unified processing of Tree object.</p>
 <dl class="function">
 <dt id="treelib.plugins.export_to_dot">
-<code class="descclassname">treelib.plugins.</code><code class="descname">export_to_dot</code><span class="sig-paren">(</span><em>tree</em>, <em>filename</em>, <em>shape=u'circle'</em>, <em>graph=u'digraph'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treelib/plugins.html#export_to_dot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.plugins.export_to_dot" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">treelib.plugins.</code><code class="descname">export_to_dot</code><span class="sig-paren">(</span><em>tree</em>, <em>filename=None</em>, <em>shape='circle'</em>, <em>graph='digraph'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/treelib/plugins.html#export_to_dot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.plugins.export_to_dot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Exports the tree in the dot format of the graphviz software</p>
 </dd></dl>
 
@@ -616,20 +623,20 @@ utilities to extend the basic Tree class.</p>
 <dl class="exception">
 <dt id="treelib.exceptions.DuplicatedNodeIdError">
 <em class="property">exception </em><code class="descclassname">treelib.exceptions.</code><code class="descname">DuplicatedNodeIdError</code><a class="reference internal" href="_modules/treelib/exceptions.html#DuplicatedNodeIdError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.exceptions.DuplicatedNodeIdError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>Exception throwed if an identifier already exists in a tree.</p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="treelib.exceptions.InvalidLevelNumber">
 <em class="property">exception </em><code class="descclassname">treelib.exceptions.</code><code class="descname">InvalidLevelNumber</code><a class="reference internal" href="_modules/treelib/exceptions.html#InvalidLevelNumber"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.exceptions.InvalidLevelNumber" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 </dd></dl>
 
 <dl class="exception">
 <dt id="treelib.exceptions.LinkPastRootNodeError">
 <em class="property">exception </em><code class="descclassname">treelib.exceptions.</code><code class="descname">LinkPastRootNodeError</code><a class="reference internal" href="_modules/treelib/exceptions.html#LinkPastRootNodeError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.exceptions.LinkPastRootNodeError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>Exception throwed in Tree.link_past_node() if one attempts
 to “link past” the root node of a tree.</p>
 </dd></dl>
@@ -637,7 +644,7 @@ to “link past” the root node of a tree.</p>
 <dl class="exception">
 <dt id="treelib.exceptions.LoopError">
 <em class="property">exception </em><code class="descclassname">treelib.exceptions.</code><code class="descname">LoopError</code><a class="reference internal" href="_modules/treelib/exceptions.html#LoopError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.exceptions.LoopError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>Exception thrown if trying to move node B to node A’s position
 while A is B’s ancestor.</p>
 </dd></dl>
@@ -645,7 +652,7 @@ while A is B’s ancestor.</p>
 <dl class="exception">
 <dt id="treelib.exceptions.MultipleRootError">
 <em class="property">exception </em><code class="descclassname">treelib.exceptions.</code><code class="descname">MultipleRootError</code><a class="reference internal" href="_modules/treelib/exceptions.html#MultipleRootError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.exceptions.MultipleRootError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>Exception throwed if more than one root exists in a tree.</p>
 </dd></dl>
 
@@ -666,7 +673,7 @@ while A is B’s ancestor.</p>
 <dl class="exception">
 <dt id="treelib.exceptions.NodePropertyError">
 <em class="property">exception </em><code class="descclassname">treelib.exceptions.</code><code class="descname">NodePropertyError</code><a class="reference internal" href="_modules/treelib/exceptions.html#NodePropertyError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#treelib.exceptions.NodePropertyError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">exceptions.Exception</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 <p>Basic Node attribute error</p>
 </dd></dl>
 
