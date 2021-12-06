@@ -14,7 +14,9 @@ setup(
     license="Apache License, Version 2.0",
     packages=['treelib'],
     keywords=['data structure', 'tree', 'tools'],
-    install_requires=["future"],
+    install_requires=[
+        "future ; python_version<'3'",
+    ],
     classifiers=[
         'Development Status :: 4 - Beta',
         'Environment :: Console',
